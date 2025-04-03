@@ -37,6 +37,12 @@ resource "aws_eks_node_group" "project_eks_node_group" {
     max_size = var.scaling_max_size
     min_size = var.scaling_min_size
   }
+
+  depends_on = [ 
+    aws_iam_role_policy_attachment.eks_cni_policy,
+    aws_iam_role_policy_attachment.eks_worker_node_policy,
+    aws_iam_role_policy_attachment.ecr_readonly_policy,
+   ]
 }
 #=======================================================
 # IAM role for EKS Cluster
