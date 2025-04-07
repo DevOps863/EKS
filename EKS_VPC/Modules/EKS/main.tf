@@ -63,12 +63,12 @@ resource "aws_iam_role" "k8sadmin" {
 
 resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role = aws_iam_role.k8sadmin.name.arn
+  role = aws_iam_role.k8sadmin.name
 }
 
 resource "aws_iam_role_policy_attachment" "eks_vpc_controller_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
-  role = aws_iam_role.k8sadmin.name.arn
+  role = aws_iam_role.k8sadmin.name
 }
 
 #==============================================
