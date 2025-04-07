@@ -1,0 +1,74 @@
+pipeline {
+    agent any
+    environment{
+        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_KEY_ID')
+        AWS_DEFAULT_REGION = 'ap-south-1'
+    }
+
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/DevOps863/EKS.git']])
+            }
+        }
+        
+        stage('Initialize Terraform') {
+            steps {
+                script {
+                    
+                        sh 'terraform init'
+                    
+                }
+            }
+        }
+        
+        stage('Format the code') {
+            steps {
+                script {
+                    sh 'terraform fmt'
+                }
+            }
+        }
+        
+        stage('validate the code') {
+            steps {
+                script {
+                    sh 'terraform validate'
+                }
+            }
+        }
+        
+        stage('Preview the chnages') {
+            steps {
+                script {
+                    
+                        sh 'terraform plan'
+                    
+                }
+                input(message: "Are you sure to proceed?", ok: "proceed")
+            }
+        }
+        
+        stage('Create the infra'){
+            steps{
+                script{
+                    sh 'terraform $action --auto-approve'
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            cleanWs() // Clean workspace after execution
+        }
+        success {
+            echo 'EKS cluster deployed successfully!'
+        }
+        failure {
+            echo 'EKS cluster deployment failed.'
+        }
+    }
+}
+
