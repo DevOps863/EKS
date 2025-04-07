@@ -122,7 +122,7 @@ resource "aws_security_group" "eks-sg" {
     description = "https"
     from_port = 465
     to_port = 465
-    protocol = TCP
+    protocol = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
    },
 
