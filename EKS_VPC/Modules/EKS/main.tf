@@ -54,9 +54,9 @@ resource "aws_iam_role" "k8sadmin" {
     Statement = [{
         Effect = "Allow"
         Principal = {
-            Service = "eks.amazon.com"
+            Service = "eks.amazonaws.com"
         }
-        Action = "sts.AssumeRole"
+        Action = "sts:AssumeRole"
     }]
   })
 }
@@ -84,7 +84,7 @@ resource "aws_iam_role" "eks_node_role" {
             Principal = {
                 Service = "ec2.amazonaws.com"
             }
-            Action = "sts.AssumeRole"
+            Action = "sts:AssumeRole"
         }]
     })
 }
