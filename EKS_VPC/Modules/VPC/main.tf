@@ -27,7 +27,7 @@ resource "aws_subnet" "project_eks_public_subnet" {
     count = var.public_sb_count
     vpc_id = aws_vpc.project_eks.id
     cidr_block = var.public_cidr[count.index]
-    availability_zone = random_shuffle.az_list.result_count[count.index]
+    availability_zone = random_shuffle.az_list.result[count.index]
     map_public_ip_on_launch = true // Makes the subnet public
 
     tags = {
@@ -39,7 +39,7 @@ resource "aws_subnet" "project_eks_private_subnet" {
   count = var.private_sb_count
   vpc_id = aws_vpc.project_eks.id
   cidr_block = var.private_cidr[count.index]
-  availability_zone = random_shuffle.az_list.result_count[count.index]
+  availability_zone = random_shuffle.az_list.result[count.index]
   map_public_ip_on_launch = false //make the subnet private
 
   tags = {

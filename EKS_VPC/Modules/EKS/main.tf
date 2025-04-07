@@ -15,8 +15,8 @@ resource "aws_eks_cluster" "first_cluster" {
   }
 
   depends_on = [ 
-    aws_iam_role_policy_attachment.eks_cluster_policy,
-    aws_iam_role_policy_attachment.eks_vpc_controller_policy,
+    aws_iam_role_policy_attachment.eks_cluster_policy.arn,
+    aws_iam_role_policy_attachment.eks_vpc_controller_policy.arn,
    ]
 }
 
@@ -39,9 +39,9 @@ resource "aws_eks_node_group" "project_eks_node_group" {
   }
 
   depends_on = [ 
-    aws_iam_role_policy_attachment.eks_cni_policy,
-    aws_iam_role_policy_attachment.eks_worker_node_policy,
-    aws_iam_role_policy_attachment.ecr_readonly_policy,
+    aws_iam_role_policy_attachment.eks_cni_policy.arn,
+    aws_iam_role_policy_attachment.eks_worker_node_policy.arn,
+    aws_iam_role_policy_attachment.ecr_readonly_policy.arn,
    ]
 }
 #=======================================================
