@@ -15,8 +15,8 @@ resource "aws_eks_cluster" "first_cluster" {
   }
 
   depends_on = [ 
-    aws_iam_role_policy_attachment.eks_cluster_policy.arn,
-    aws_iam_role_policy_attachment.eks_vpc_controller_policy.arn,
+    aws_iam_role_policy_attachment.eks_cluster_policy,
+    aws_iam_role_policy_attachment.eks_vpc_controller_policy,
    ]
 }
 
@@ -39,9 +39,9 @@ resource "aws_eks_node_group" "project_eks_node_group" {
   }
 
   depends_on = [ 
-    aws_iam_role_policy_attachment.eks_cni_policy.arn,
-    aws_iam_role_policy_attachment.eks_worker_node_policy.arn,
-    aws_iam_role_policy_attachment.ecr_readonly_policy.arn,
+    aws_iam_role_policy_attachment.eks_cni_policy,
+    aws_iam_role_policy_attachment.eks_worker_node_policy,
+    aws_iam_role_policy_attachment.ecr_readonly_policy,
    ]
 }
 #=======================================================
@@ -63,12 +63,12 @@ resource "aws_iam_role" "k8sadmin" {
 
 resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role = aws_iam_role.k8sadmin.name
+  role = aws_iam_role.k8sadmin.name.arn
 }
 
 resource "aws_iam_role_policy_attachment" "eks_vpc_controller_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
-  role = aws_iam_role.k8sadmin.name
+  role = aws_iam_role.k8sadmin.name.arn
 }
 
 #==============================================
@@ -91,17 +91,17 @@ resource "aws_iam_role" "eks_node_role" {
 
 resource "aws_iam_role_policy_attachment" "eks_worker_node_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role = aws_iam_role.eks_node_role
+  role = aws_iam_role.eks_node_role.arn
 }
 
 resource "aws_iam_role_policy_attachment" "eks_cni_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role = aws_iam_role.eks_node_role
+  role = aws_iam_role.eks_node_role.arn
 }
 
 resource "aws_iam_role_policy_attachment" "ecr_readonly_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role = aws_iam_role.eks_node_role
+  role = aws_iam_role.eks_node_role.arn
 }
 
 
