@@ -15,6 +15,9 @@ resource "aws_internet_gateway" "my_igw" {
   }
 }
 
+# Fetch Available AWS Availability Zones
+data "aws_availability_zones" "available" {}
+
 resource "random_shuffle" "az_list" {
   input = data.aws_availability_zones.available.names
   result_count = 2
@@ -60,7 +63,7 @@ resource "aws_route" "public route" {
 resource "aws_route_table_association" "publicRT-association" {
   count = var.public_sb_count
   route_table_id = aws_route_table.public_internet.id
-  subnet_id = var.public_subnet_name[count.index].id
+  subnet_id = aws_subnet.project_eks_public_subnet[count.index].id
 }
 
 resource "aws_route_table" "Private-route-table" {
@@ -88,7 +91,7 @@ resource "aws_security_group" "eks-sg" {
     from_port = "80"
     to_port = "80"
     protocol = "TCP"
-    cidr_block = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
    },
   
    {
@@ -96,7 +99,7 @@ resource "aws_security_group" "eks-sg" {
     from_port = "25"
     to_port = "25"
     protocol = "TCP"
-    cidr_block = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
    },
 
     {
@@ -104,7 +107,7 @@ resource "aws_security_group" "eks-sg" {
     from_port = "22"
     to_port = "22"
     protocol = "TCP"
-    cidr_block = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
    },
 
     {
@@ -112,7 +115,7 @@ resource "aws_security_group" "eks-sg" {
     from_port = "443"
     to_port = "443"
     protocol = "TCP"
-    cidr_block = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
    },
 
    {
@@ -120,7 +123,7 @@ resource "aws_security_group" "eks-sg" {
     from_port = "465"
     to_port = "465"
     protocol = "TCP"
-    cidr_block = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
    },
 
    {
@@ -128,7 +131,7 @@ resource "aws_security_group" "eks-sg" {
     from_port = "30000"
     to_port = "32767"
     protocol = "TCP"
-    cidr_block = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
    },
 
    {
@@ -136,7 +139,7 @@ resource "aws_security_group" "eks-sg" {
     from_port = "3000"
     to_port = "10000"
     protocol = "TCP"
-    cidr_block = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
    },
     ]
 
