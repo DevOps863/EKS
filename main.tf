@@ -29,7 +29,7 @@ module "EKS" {
   aws_public_subnet = module.VPC.aws_public_subnet
   node_group_name = "Project-eks"
   instance_types = ["t3.small"]
-  key_pair = file("~/.ssh/id_rsa.pub") // update the path for key pair
+  key_pair = "Terraform" // update the path for key pair
   scaling_desired_size = 2
   scaling_max_size = 3
   scaling_min_size = 1
