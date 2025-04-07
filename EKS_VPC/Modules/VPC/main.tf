@@ -85,63 +85,69 @@ resource "aws_security_group" "eks-sg" {
      Name = "EKS-SG"
    }
 
-   ingress = [ 
-    {
-    description = "HTTP"
-    from_port = 80
-    to_port = 80
-    protocol = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
-   },
-  
-   {
-    description = "SMTP"
-    from_port = 25
-    to_port = 25
-    protocol = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
-   },
+   ingress {
+        description = "HTTP"
+        from_port = "80"
+        to_port = "80"
+        protocol = "TCP"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
 
-    {
-    description = "SSH"
-    from_port = 22
-    to_port = 22
-    protocol = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
-   },
+    ingress {
+        description = "SMTP"
+        from_port = "25"
+        to_port = "25"
+        protocol = "TCP"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
 
-    {
-    description = "https"
-    from_port = 443
-    to_port = 443
-    protocol = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
-   },
+    ingress {
+        description = "SSH"
+        from_port = "22"
+        to_port = "22"
+        protocol = "TCP"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
 
-   {
-    description = "https"
-    from_port = 465
-    to_port = 465
-    protocol = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
-   },
+    ingress {
+        description = "https"
+        from_port = "443"
+        to_port = "443"
+        protocol = "TCP"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
 
-   {
-    description = "https"
-    from_port = 30000
-    to_port = 32767
-    protocol = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
-   },
+    ingress {
+        description = "kube-api"
+        from_port = "6443"
+        to_port = "6443"
+        protocol = "TCP"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
 
-   {
-    description = "https"
-    from_port = 3000
-    to_port = 10000
-    protocol = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
-   },
-    ]
+    ingress {
+        description = "sendmail"
+        from_port = "465"
+        to_port = "465"
+        protocol = "TCP"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+        description = "App deployment"
+        from_port = "30000"
+        to_port = "32767"
+        protocol = "TCP"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+        description = "Tools"
+        from_port = "3000"
+        to_port = "10000"
+        protocol = "TCP"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
 
     egress {
         from_port = 0
