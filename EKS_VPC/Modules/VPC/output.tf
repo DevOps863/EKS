@@ -12,3 +12,8 @@ output "vpc_id" {
   description = "List the VPC IP"
   value = aws_vpc.project_eks.id
 }
+
+output "eks_sg_id" {
+  value = aws_security_group.EKS-SG.id
+  description = "The security group ID for EKS"
+}

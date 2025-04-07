@@ -8,6 +8,11 @@ variable "aws_public_subnet" {
   type = list(string)
 }
 
+variable "eks_sg_id" {
+  description = "Enter the sg id"
+  type = string
+}
+
 variable "node_group_name" {
   description = "ENter the value for node_group_name"
   type = string

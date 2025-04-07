@@ -25,6 +25,7 @@ module "VPC" {
 module "EKS" {
   source = "./EKS_VPC/Modules/EKS"
   cluster_name = "my-eks-cluster-${random_string.suffix.result}"
+  eks_sg_id = module.VPC.eks_sg_id
   aws_public_subnet = module.VPC.aws_public_subnet
   node_group_name = "Project-eks"
   instance_types = ["t3.small"]
