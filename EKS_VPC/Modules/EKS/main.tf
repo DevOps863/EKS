@@ -100,7 +100,7 @@ resource "aws_iam_role_policy_attachment" "eks_cni_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "ecr_readonly_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role = aws_iam_role.eks_node_role.name
 }
 
