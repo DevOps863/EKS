@@ -28,7 +28,7 @@ resource "aws_eks_node_group" "project_eks_node_group" {
   instance_types = var.instance_types
 
   remote_access {
-    source_security_group_ids = [aws_security_group.EKS-SG.id]
+    source_security_group_ids = [var.eks_sg_id]
     ec2_ssh_key = var.key_pair
   }
 
