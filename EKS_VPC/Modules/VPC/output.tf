@@ -14,6 +14,6 @@ output "vpc_id" {
 }
 
 output "eks_sg_id" {
-  value = aws_security_group.EKS-SG.id
+  value = aws_security_group.eks-sg.id
   description = "The security group ID for EKS"
 }
